@@ -1,0 +1,133 @@
+name: Render black hole video
+
+on:
+  workflow_dispatch:
+    inputs:
+      preview_only:
+        description: "Only render still previews (fast smoke test). Untick for the full video."
+        type: boolean
+        default: true
+      frames_per_shard:
+        description: "Frames per parallel render job (14400 frames total)"
+        default: "300"
+      voice:
+        description: "edge-tts voice for the narration"
+        default: "en-US-AndrewNeural"
+      sky_texture_url:
+        description: "Optional URL of an equirectangular star-map JPG (e.g. NASA SVS Deep Star Maps, public domain)"
+        default: ""
+
+jobs:
+  audio:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: sudo apt-get update && sudo apt-get install -y ffmpeg
+      - run: pip install -r requirements.txt
+      - run: python scripts/audio.py --voice "${{ inputs.voice }}"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: audio
+          path: |
+            build/audio/music.wav
+            build/audio/narration.wav
+            build/timing.json
+            build/subtitles.srt
+
+  plan:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.m.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - id: m
+        run: echo "matrix=$(node scripts/plan.mjs '${{ inputs.frames_per_shard }}')" >> "$GITHUB_OUTPUT"
+
+  preview:
+    needs: audio
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: sudo apt-get update && sudo apt-get install -y ffmpeg fonts-dejavu-core fonts-liberation
+      - run: npm install
+      - uses: actions/download-artifact@v4
+        with:
+          name: audio
+          path: build
+      - name: Optional sky texture
+        if: ${{ inputs.sky_texture_url != '' }}
+        run: |
+          mkdir -p assets/textures
+          curl -fL "${{ inputs.sky_texture_url }}" -o assets/textures/sky.jpg
+      - name: Render preview stills
+        run: node render.mjs --snap=1,20,45,80,120,160,200,235,270,320,360,400,440,470
+      - uses: actions/upload-artifact@v4
+        with:
+          name: preview-stills
+          path: build/snaps/*.png
+
+  render:
+    if: ${{ !inputs.preview_only }}
+    needs: [audio, plan, preview]
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    strategy:
+      fail-fast: false
+      max-parallel: 20
+      matrix: ${{ fromJSON(needs.plan.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: sudo apt-get update && sudo apt-get install -y ffmpeg fonts-dejavu-core fonts-liberation
+      - run: npm install
+      - uses: actions/download-artifact@v4
+        with:
+          name: audio
+          path: build
+      - name: Optional sky texture
+        if: ${{ inputs.sky_texture_url != '' }}
+        run: |
+          mkdir -p assets/textures
+          curl -fL "${{ inputs.sky_texture_url }}" -o assets/textures/sky.jpg
+      - name: Render frames ${{ matrix.start }}-${{ matrix.end }}
+        run: node render.mjs --start=${{ matrix.start }} --end=${{ matrix.end }} --out=build/shards/shard_${{ matrix.index }}.mp4
+      - uses: actions/upload-artifact@v4
+        with:
+          name: shard-${{ matrix.index }}
+          path: build/shards/shard_${{ matrix.index }}.mp4
+          retention-days: 2
+
+  assemble:
+    needs: render
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update && sudo apt-get install -y ffmpeg
+      - uses: actions/download-artifact@v4
+        with:
+          name: audio
+          path: build
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: shard-*
+          path: build/shards
+          merge-multiple: true
+      - run: bash scripts/assemble.sh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: falling-into-a-black-hole
+          path: |
+            build/falling-into-a-black-hole.mp4
+            build/falling-into-a-black-hole.srt
