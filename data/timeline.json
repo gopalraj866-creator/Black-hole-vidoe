@@ -1,0 +1,110 @@
+{
+  "title": "Falling Into a Black Hole: What Would You Actually See?",
+  "fps": 30,
+  "duration": 480,
+  "credits": "Sources: NASA — Anatomy of a Black Hole; NASA — What Happens When Something Gets Too Close?",
+  "disclaimer": "Educational visualization based on general relativity. Not a simulation of any specific black hole.",
+  "endQuestion": "WHAT WOULD YOU WANT TO KNOW ABOUT BLACK HOLES?",
+  "scenes": [
+    {
+      "id": 1, "title": "The journey begins", "start": 0, "end": 30,
+      "narration": "Imagine falling into a black hole. As gravity bends light and time itself behaves differently, the universe around you begins to transform. But what would you actually see as you cross the point of no return?",
+      "cam": { "d": [55, 34], "az": [0, 10], "el": [12, 8], "fov": [55, 55] },
+      "cockpit": false, "steps": 420, "exposure": [1.0, 1.0]
+    },
+    {
+      "id": 2, "title": "Finding the black hole", "start": 30, "end": 60,
+      "narration": "A black hole is not an empty tunnel in space. It is a region where matter has been compressed so intensely that, beyond a boundary called the event horizon, nothing can escape, not even light.",
+      "text": { "text": "THE POINT OF NO RETURN", "at": 2.0, "dur": 5.0 },
+      "cam": { "d": [34, 24], "az": [10, 22], "el": [8, 6], "fov": [55, 55] },
+      "cockpit": true, "steps": 420, "exposure": [1.0, 1.0]
+    },
+    {
+      "id": 3, "title": "The accretion disk", "start": 60, "end": 95,
+      "narration": "The brilliant light comes from material outside the black hole. Gas and dust heat up as they orbit and gradually spiral inward. The black hole itself remains dark against this spectacular ring of radiation.",
+      "labels": [
+        { "text": "ACCRETION DISK", "sub": "Hot gas and dust spiralling inward", "at": 3, "dur": 7, "x": 0.07, "y": 0.80 }
+      ],
+      "cam": { "d": [24, 15], "az": [22, 80], "el": [6, 4], "fov": [55, 58] },
+      "cockpit": true, "steps": 420, "exposure": [1.0, 1.0]
+    },
+    {
+      "id": 4, "title": "Light bends around gravity", "start": 95, "end": 135,
+      "narration": "Einstein's theory of general relativity predicts that gravity curves spacetime. Light follows these curved paths, creating distorted images of objects behind the black hole. The sky no longer looks the way it should.",
+      "text": { "text": "GRAVITATIONAL LENSING", "at": 2.0, "dur": 5.0 },
+      "cam": { "d": [15, 12], "az": [80, 95], "el": [3, 6], "fov": [58, 60] },
+      "cockpit": true, "steps": 480, "exposure": [1.0, 1.0]
+    },
+    {
+      "id": 5, "title": "Approaching the event horizon", "start": 135, "end": 175,
+      "narration": "As your spacecraft moves closer, escaping becomes increasingly difficult. The event horizon is not a solid surface. It is a boundary in spacetime that separates paths capable of escaping from those that cannot.",
+      "labels": [
+        { "text": "EVENT HORIZON", "sub": "A boundary in spacetime, not a surface", "at": 12, "dur": 8, "x": 0.07, "y": 0.80 }
+      ],
+      "cam": { "d": [12, 6], "az": [95, 100], "el": [6, 4], "fov": [60, 65] },
+      "cockpit": true, "steps": 480, "exposure": [1.0, 1.0]
+    },
+    {
+      "id": 6, "title": "Time dilation", "start": 175, "end": 220,
+      "narration": "Gravity changes how time is measured by observers in different locations. A distant observer receives light from your spacecraft increasingly delayed and redshifted as you approach the horizon. But your own clock continues to tick normally as you fall.",
+      "text": { "text": "TIME PASSES DIFFERENTLY", "at": 1.5, "dur": 5.0 },
+      "view": "clock",
+      "cam": { "d": [6, 1.25], "az": [100, 105], "el": [4, 3], "fov": [65, 70] },
+      "cockpit": true, "steps": 500, "exposure": [1.0, 1.0]
+    },
+    {
+      "id": 7, "title": "The photon ring", "start": 220, "end": 255,
+      "narration": "Near the black hole, some light can travel along paths that loop around it. These paths create intensely distorted images of the accretion disk and contribute to the thin bright rings around the black hole's shadow.",
+      "labels": [
+        { "text": "PHOTON RING", "sub": "Light looping around the black hole", "at": 4, "dur": 9, "x": 0.07, "y": 0.80 }
+      ],
+      "cam": { "d": [12, 9], "az": [0, 0], "el": [2, 1.5], "fov": [26, 20] },
+      "cockpit": false, "steps": 800, "exposure": [1.0, 1.0]
+    },
+    {
+      "id": 8, "title": "Crossing the point of no return", "start": 255, "end": 300,
+      "narration": "Now comes the crucial moment. For a sufficiently large black hole, crossing the horizon might not produce a dramatic local flash or visible wall. But once you cross it, no signal you send can escape back to the distant universe.",
+      "labels": [
+        { "text": "NO WALL, NO FLASH", "sub": "Locally, the horizon crossing looks unremarkable", "at": 14, "dur": 9, "x": 0.07, "y": 0.80 }
+      ],
+      "cam": { "d": [1.3, 0.85], "az": [105, 110], "el": [3, 0], "fov": [85, 90] },
+      "cockpit": true, "steps": 500, "exposure": [1.0, 1.1]
+    },
+    {
+      "id": 9, "title": "Spaghettification", "start": 300, "end": 340,
+      "narration": "The difference in gravity between the near and far ends of an object can stretch it dramatically. Scientists call this spaghettification. Around a smaller black hole, these tidal forces can become destructive before the horizon is crossed.",
+      "labels": [
+        { "text": "SPAGHETTIFICATION", "sub": "Tidal forces stretch along gravity, squeeze sideways", "at": 3, "dur": 14, "x": 0.07, "y": 0.80 }
+      ],
+      "view": "tidal",
+      "cam": { "d": [0.85, 0.7], "az": [110, 115], "el": [0, 0], "fov": [90, 90], "lb": [0, 1] },
+      "cockpit": false, "steps": 400, "exposure": [1.1, 1.1]
+    },
+    {
+      "id": 10, "title": "What lies inside?", "start": 340, "end": 380,
+      "narration": "What happens deeper inside remains a profound question. In classical general relativity, a simple non-rotating black hole leads toward a singularity, where the theory ceases to provide a complete physical description. A definitive quantum-gravity explanation remains unknown.",
+      "labels": [
+        { "text": "SINGULARITY", "sub": "Classical theory stops giving a complete description", "at": 12, "dur": 14, "x": 0.07, "y": 0.80 }
+      ],
+      "cam": { "d": [0.7, 0.4], "az": [115, 120], "el": [0, 0], "fov": [90, 90], "lb": [1, 0] },
+      "abstract": [0.3, 1.0],
+      "cockpit": false, "steps": 400, "exposure": [1.1, 1.1]
+    },
+    {
+      "id": 11, "title": "What would someone far away see?", "start": 380, "end": 430,
+      "narration": "Someone far away would see your signals become delayed, redshifted and dimmer. They would not receive a clear picture of your crossing. Meanwhile, you would pass the horizon in your own finite time, assuming the conditions allow you to survive that long.",
+      "labels": [
+        { "text": "GRAVITATIONAL REDSHIFT", "sub": "Signals arrive later, redder and fainter", "at": 6, "dur": 12, "x": 0.07, "y": 0.80 }
+      ],
+      "view": "observer",
+      "cam": { "d": [22, 22], "az": [0, 0], "el": [4, 4], "fov": [40, 40] },
+      "cockpit": false, "steps": 420, "exposure": [1.0, 1.0]
+    },
+    {
+      "id": 12, "title": "Final mystery", "start": 430, "end": 480,
+      "narration": "A black hole challenges our understanding of space, time and gravity. We can study its effects, observe its surroundings and test Einstein's predictions. But once something crosses the event horizon, its story can no longer be transmitted back to us. The universe still holds mysteries we have yet to solve.",
+      "cam": { "d": [22, 500], "az": [0, 30], "el": [4, 10], "fov": [40, 40] },
+      "cockpit": false, "steps": 420, "exposure": [1.0, 1.6]
+    }
+  ]
+}

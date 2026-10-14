@@ -1,0 +1,16 @@
+{
+  "name": "falling-into-a-black-hole",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Three.js + GitHub Actions rendered documentary: Falling Into a Black Hole",
+  "scripts": {
+    "snap": "node render.mjs --snap=1,20,45,80,120,160,200,235,270,320,360,400,440,470",
+    "render": "node render.mjs",
+    "plan": "node scripts/plan.mjs 300"
+  },
+  "dependencies": {
+    "puppeteer": "^24.0.0",
+    "three": "^0.180.0"
+  }
+}
